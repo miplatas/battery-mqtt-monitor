@@ -183,4 +183,4 @@ sudo dpkg -r battery-mqtt-monitor
 
 ## License
 
-MIT
+GNU General Public License v3.0
