@@ -2,6 +2,12 @@
 
 Publishes battery status to an MQTT broker every minute. Works on any Linux system with `upower` and `systemd`. Integrates with any platform that can subscribe to MQTT topics.
 
+## Preview
+
+![MQTT Explorer showing battery data](images/mqtt_explorer.png)
+
+*Battery data as seen in [MQTT Explorer](https://mqtt-explorer.com)*
+
 ## What it publishes
 
 **Topic:** `devices/<hostname>/battery`
@@ -183,4 +189,4 @@ sudo dpkg -r battery-mqtt-monitor
 
 ## License
 
-GNU General Public License 3.0.
+MIT
