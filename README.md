@@ -27,7 +27,7 @@ Publishes battery status to an MQTT broker every minute. Works on any Linux syst
 
 ## Preview
 
-<img src="images/mqtt_explorer.png" width="300"/>
+<img src="images/mqtt_explorer.png" width="330"/>
 
 *Battery data published as seen in [MQTT Explorer](https://mqtt-explorer.com)*
 
