@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+echo "Stopping battery-mqtt-monitor..."
+
+systemctl stop battery-mqtt-monitor.timer  2>/dev/null || true
+systemctl disable battery-mqtt-monitor.timer 2>/dev/null || true
+systemctl daemon-reload
+
+echo "✔ battery-mqtt-monitor stopped."

@@ -1,0 +1,7 @@
+# battery-mqtt-monitor configuration
+# Edit these values to match your MQTT broker setup
+
+MQTT_BROKER="192.168.1.1"
+MQTT_PORT="1883"
+MQTT_USER=""
+MQTT_PASS=""

@@ -1,0 +1,11 @@
+Package: battery-mqtt-monitor
+Version: 1.0.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: bash, upower, jq, mosquitto-clients, bc
+Maintainer: battery-mqtt-monitor contributors
+Description: Publishes battery status to MQTT for Home Assistant
+ Monitors battery charge, status, time remaining, and wear level,
+ then publishes them as JSON to an MQTT broker every minute.
+ Compatible with Home Assistant MQTT Auto-Discovery.

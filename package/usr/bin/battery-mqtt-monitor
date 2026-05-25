@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# ==== LOAD CONFIG ====
+CONFIG_FILE="/etc/battery-mqtt-monitor/config"
+
+if [[ ! -f "$CONFIG_FILE" ]]; then
+  echo "Error: config file not found at $CONFIG_FILE" >&2
+  exit 1
+fi
+
+source "$CONFIG_FILE"
+
+if [[ -z "$MQTT_BROKER" ]]; then
+  echo "Error: MQTT_BROKER is not set in $CONFIG_FILE" >&2
+  exit 1
+fi
+
+# ==== TOPIC ====
+HOSTNAME=$(hostname)
+TOPIC="devices/${HOSTNAME}/battery"
+
+# ==== GATHER DATA ====
+BAT_PATH=$(upower -e | grep -i BAT | head -1)
+
+if [[ -z "$BAT_PATH" ]]; then
+  echo "Error: no battery found via upower" >&2
+  exit 1
+fi
+
+CHARGE=$(upower -i "$BAT_PATH" | awk '/percentage/ {gsub("%",""); print $2}')
+STATUS=$(upower -i "$BAT_PATH" | awk '/state/ {print $2}')
+TIME_REMAIN=$(upower -i "$BAT_PATH" | awk '/time to/ {print $4, $5}')
+ENERGY_FULL=$(upower -i "$BAT_PATH" | awk '/energy-full:/ {print $2}')
+ENERGY_DESIGN=$(upower -i "$BAT_PATH" | awk '/energy-full-design:/ {print $2}')
+
+TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+
+# ==== CALCULATE WEAR ====
+if [[ -n "$ENERGY_FULL" && -n "$ENERGY_DESIGN" && "$ENERGY_DESIGN" != "0" ]]; then
+  WEAR=$(echo "scale=2; 100 - ($ENERGY_FULL * 100 / $ENERGY_DESIGN)" | bc)
+else
+  WEAR="null"
+fi
+
+# ==== BUILD JSON ====
+JSON_PAYLOAD=$(jq -n \
+  --arg charge        "$CHARGE" \
+  --arg status        "$STATUS" \
+  --arg time_remaining "$TIME_REMAIN" \
+  --arg wear          "$WEAR" \
+  --arg timestamp     "$TIMESTAMP" \
+  '{
+    charge:         ($charge         | tonumber? // null),
+    status:         $status,
+    time_remaining: $time_remaining,
+    wear:           ($wear           | tonumber? // null),
+    timestamp:      $timestamp
+  }'
+)
+
+# ==== PUBLISH ====
+MQTT_ARGS=(-h "$MQTT_BROKER" -p "$MQTT_PORT" -t "$TOPIC" -m "$JSON_PAYLOAD")
+
+[[ -n "$MQTT_USER" ]] && MQTT_ARGS+=(-u "$MQTT_USER")
+[[ -n "$MQTT_PASS" ]] && MQTT_ARGS+=(-P "$MQTT_PASS")
+
+mosquitto_pub "${MQTT_ARGS[@]}"

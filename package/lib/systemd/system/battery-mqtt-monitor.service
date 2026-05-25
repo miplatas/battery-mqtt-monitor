@@ -1,0 +1,11 @@
+[Unit]
+Description=Battery MQTT Monitor
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/battery-mqtt-monitor
+User=%i
+
+[Install]
+WantedBy=multi-user.target
