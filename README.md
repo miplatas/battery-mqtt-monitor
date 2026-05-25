@@ -36,7 +36,7 @@ Publishes battery status to an MQTT broker every minute. Works on any Linux syst
 ### Option 1 — Download the .deb (recommended)
 
 ```bash
-wget https://github.com/your-username/battery-mqtt-monitor/releases/download/v1.0.0/battery-mqtt-monitor_1.0.0_all.deb
+wget https://github.com/miplatas/battery-mqtt-monitor/releases/download/v1.0.0/battery-mqtt-monitor_1.0.0_all.deb
 sudo dpkg -i battery-mqtt-monitor_1.0.0_all.deb
 ```
 
@@ -45,7 +45,7 @@ During installation you will be asked for your MQTT broker IP, port, and credent
 ### Option 2 — Build from source
 
 ```bash
-git clone https://github.com/your-username/battery-mqtt-monitor
+git clone https://github.com/miplatas/battery-mqtt-monitor
 cd battery-mqtt-monitor
 make
 sudo dpkg -i releases/battery-mqtt-monitor_1.0.0_all.deb
