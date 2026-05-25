@@ -2,12 +2,6 @@
 
 Publishes battery status to an MQTT broker every minute. Works on any Linux system with `upower` and `systemd`. Integrates with any platform that can subscribe to MQTT topics.
 
-## Preview
-
-![MQTT Explorer showing battery data](images/mqtt_explorer.png)
-
-*Battery data as seen in [MQTT Explorer](https://mqtt-explorer.com)*
-
 ## What it publishes
 
 **Topic:** `devices/<hostname>/battery`
@@ -30,6 +24,12 @@ Publishes battery status to an MQTT broker every minute. Works on any Linux syst
 | `time_remaining` | string | Estimated time left, empty when charging |
 | `wear` | number | Battery degradation percentage since new |
 | `timestamp` | string | Time of last reading (YYYY-MM-DD HH:MM:SS) |
+
+## Preview
+
+<img src="images/mqtt_explorer.png" width="300"/>
+
+*Battery data published as seen in [MQTT Explorer](https://mqtt-explorer.com)*
 
 ## Requirements
 
