@@ -1,6 +1,6 @@
 # battery-mqtt-monitor
 
-Publishes battery status to an MQTT broker every minute. Works on any Linux system with `upower` and `systemd`. Integrates with any platform that can subscribe to MQTT topics.
+Publishes battery status to an MQTT broker every minute. Works on Linux system with `upower` and `systemd`. Integrates with any platform that can subscribe to MQTT topics.
 
 ## What it publishes
 
